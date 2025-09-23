@@ -48,7 +48,7 @@ Este projeto é uma API RESTful desenvolvida em Python, utilizando **Flask** ou 
     ```bash
     python -m venv venv
     source venv/bin/activate  # Linux/Mac
-    venv\Scripts\activate     # Windows
+    .\/venv/Scripts/activate     # Windows
     ```
 
 3. **Instale as dependências:**
@@ -66,6 +66,7 @@ Este projeto é uma API RESTful desenvolvida em Python, utilizando **Flask** ou 
     ```bash
     uvicorn main:app --reload  # Para FastAPI
     # ou
+    set FLASK_APP=app:create_app 
     flask run                  # Para Flask
     ```
 
