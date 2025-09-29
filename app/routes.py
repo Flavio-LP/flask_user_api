@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from .database import db
 from sqlalchemy import text
+from .auth import generate_token, verify_token
 
 
 bp = Blueprint('routes', __name__)
@@ -20,4 +21,6 @@ def query():
 def create():
     json = request.json
     print(json)
+    jwt = generate_token("joao")
+    print(jwt)
     return jsonify({"resultado": f"Dado JSON: {json}"}), 201
