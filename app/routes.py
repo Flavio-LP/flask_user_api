@@ -48,6 +48,9 @@ def user_autenticate():
     except ValidationError as e:
         return jsonify({'error': e.errors()}), 400
     
+    if not Users.query.filter_by(username=data.username).first():
+        return jsonify({'error': 'Usuário não existe'}), 404
+
     password_hash=generate_token(data.username,data.password)
     User = db.session.query(Users).filter(Users.username == data.username).first()
     
@@ -55,5 +58,5 @@ def user_autenticate():
     if (User.password_hash == password_hash):
         return jsonify({'message':'autorizado'}), 200
     
-    return jsonify({'error': 'Usuário não encontrado'}), 404
+    return jsonify({'error': 'Senha incorreta'}), 401
     
