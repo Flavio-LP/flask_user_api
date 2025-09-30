@@ -4,6 +4,7 @@ from sqlalchemy import text
 from .models import Users
 from .auth import generate_token, verify_token
 from .schemas import UserSchema
+from pydantic import ValidationError
 
 
 bp = Blueprint('routes', __name__)
