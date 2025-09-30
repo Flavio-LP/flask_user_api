@@ -3,7 +3,7 @@ from .database import db
 from sqlalchemy import text
 from .models import Users
 from .auth import generate_token, verify_token
-from .schemas import UserSchema
+from .schemas import UserSchema,TokenSchema
 from pydantic import ValidationError
 
 
@@ -54,9 +54,17 @@ def user_autenticate():
     password_hash=generate_token(data.username,data.password)
     User = db.session.query(Users).filter(Users.username == data.username).first()
     
-    
     if (User.password_hash == password_hash):
         return jsonify({'message':'autorizado'}), 200
     
     return jsonify({'error': 'Senha incorreta'}), 401
+    
+@bp.route('/list', methods=['GET'])
+def list():
+    try:
+        token = TokenSchema(**request.json)
+        print(token)
+        return jsonify({'message': 'autenticado'}), 201
+    except ValidationError as e:
+        return jsonify({'error': e.errors()}), 400
     
