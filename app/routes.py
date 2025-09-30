@@ -1,6 +1,9 @@
 from flask import Blueprint, request, jsonify
 from .database import db
 from sqlalchemy import text
+from .models import Users
+from .auth import generate_token, verify_token
+from .schemas import UserSchema
 
 
 bp = Blueprint('routes', __name__)
@@ -18,6 +21,38 @@ def query():
 
 @bp.route('/register', methods=['POST'])
 def create():
-    json = request.json
-    print(json)
-    return jsonify({"resultado": f"Dado JSON: {json}"}), 201
+    try:
+        # Valida e carrega os dados recebidos
+        data = UserSchema(**request.json)
+    except ValidationError as e:
+        return jsonify({'error': e.errors()}), 400
+
+    # Verifica se o usuário já existe
+    if Users.query.filter_by(username=data.username).first():
+        return jsonify({'error': 'Usuário já existe'}), 409
+    
+    user = Users(
+        username=data.username,
+        password_hash=generate_token(data.username,data.password)
+    )
+    db.session.add(user)
+    db.session.commit()
+
+    return jsonify({'message': 'Usuário criado com sucesso!'}), 201
+
+@bp.route('/consultar', methods=['POST'])
+def user_autenticate():
+    try:
+        data = UserSchema(**request.json)
+    except ValidationError as e:
+        return jsonify({'error': e.errors()}), 400
+    
+    password_hash=generate_token(data.username,data.password)
+    User = db.session.query(Users).filter(Users.username == data.username).first()
+    
+    
+    if (User.password_hash == password_hash):
+        return jsonify({'message':'autorizado'}), 200
+    
+    return jsonify({'error': 'Usuário não encontrado'}), 404
+    
