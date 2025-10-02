@@ -37,7 +37,7 @@ def create():
     user = Users(
         name=data.name,
         password_hash=generate_token({'email':data.email, 'password':data.password}),
-        token_acess = ({'email':data.email, "exp": datetime.utcnow() + timedelta(hours=1)}),
+        token_acess = generate_token({'email':data.email, "exp": datetime.utcnow() + timedelta(hours=1)}),
         email = data.email
     )
     db.session.add(user)
