@@ -76,10 +76,9 @@ def user_autenticate():
             return jsonify({'error': 'Não autorizado'}), 401
     
     
-@bp.route('/list', methods=['POST'])
+@bp.route('/users', methods=['POST'])
 def list():
     try:
-        #User = db.session.query(Users).all()
         #print(User.name)
         token = TokenSchema(**request.json)
 
@@ -87,11 +86,24 @@ def list():
 
         payload = verify_token(User.token_acess)
 
-        print(payload)
-        # expirado: {'error': 'expired token', 'status': '498'} -- realizar login novamente....
-        # inválido: {'error' : 'invalid token', 'status':'401'} -- verificar quais passos realizar
+        if ('error' in payload):
+            return '{' + payload.error + '}', payload.status
 
-        return jsonify({'message': 'autenticado'}), 201
+        Users_db = db.session.query(Users).all()
+
+        for user in Users_db:
+            
+            users = []
+
+            users.append({
+                'id' : user.id,
+                'name' : user.name,
+                'email' : user.email
+            })
+
+        return jsonify(users)
+
+        #return jsonify({'message': 'autenticado'}), 201
     except ValidationError as e:
         return jsonify({'error': e.errors()}), 400
     
