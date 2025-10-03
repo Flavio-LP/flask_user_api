@@ -1,6 +1,7 @@
+from datetime import datetime, timedelta
 from flask import Blueprint, request, jsonify
 from .database import db
-from sqlalchemy import text
+from sqlalchemy import null, text
 from .models import Users
 from .auth import generate_token, verify_token
 from .schemas import UserSchema,TokenSchema
@@ -29,12 +30,15 @@ def create():
         return jsonify({'error': e.errors()}), 400
 
     # Verifica se o usuário já existe
-    if Users.query.filter_by(username=data.username).first():
+    if Users.query.filter_by(name=data.name).first():
         return jsonify({'error': 'Usuário já existe'}), 409
     
+
     user = Users(
-        username=data.username,
-        password_hash=generate_token(data.username,data.password)
+        name=data.name,
+        password_hash=generate_token({'email':data.email, 'password':data.password}),
+        token_acess = generate_token({'email':data.email, "exp": datetime.utcnow() + timedelta(hours=1)}),
+        email = data.email
     )
     db.session.add(user)
     db.session.commit()
@@ -44,24 +48,37 @@ def create():
 @bp.route('/consultar', methods=['POST'])
 def user_autenticate():
     try:
-        data = UserSchema(**request.json)
+        data = TokenSchema(**request.json)
     except ValidationError as e:
         return jsonify({'error': e.errors()}), 400
     
-    if not Users.query.filter_by(username=data.username).first():
+    if not Users.query.filter_by(name=data.name).first():
         return jsonify({'error': 'Usuário não existe'}), 404
 
-    password_hash=generate_token(data.username,data.password)
-    User = db.session.query(Users).filter(Users.username == data.username).first()
+    #token_hase=generate_token(data.name,data.password)
+    User = db.session.query(Users).filter(Users.name == data.name).first()
+
+    payload = verify_token(data.token)
+
+    # verificar lógica de validação do token
+    #if "status" in payload:
+    #    if payload.status == '498':
+    #        return jsonify({'error': 'Token expirado'}), 498
+    #    else:
+    #        return jsonify({'error': 'Não autorizado'}), 401
+    #else:
+    #    
     
-    if (User.password_hash == password_hash):
+    if ( User.token_acess == data.token ):
         return jsonify({'message':'autorizado'}), 200
     
-    return jsonify({'error': 'Senha incorreta'}), 401
+    return jsonify({'error': 'Não autorizado'}), 401
     
 @bp.route('/list', methods=['GET'])
 def list():
     try:
+        User = db.session.query(Users).all()
+        print(User.name)
         token = TokenSchema(**request.json)
         print(token)
         return jsonify({'message': 'autenticado'}), 201
