@@ -10,10 +10,10 @@ Este projeto é uma API RESTful desenvolvida em Python, utilizando **Flask** ou 
 
 - **Cadastro de Usuários:** Permite criar novos usuários com dados básicos (nome, email, senha). ✅
 - **Login:** Autenticação de usuários via email e senha, com geração de token JWT. ✅
-- **Listagem de Usuários:** Retorna a lista de usuários cadastrados (acesso protegido). 
+- **Listagem de Usuários:** Retorna a lista de usuários cadastrados (acesso protegido).
 - **Autenticação JWT:** Protege rotas sensíveis, garantindo acesso apenas a usuários autenticados. ✅
 - **Integração com PostgreSQL:** Persistência dos dados dos usuários. ✅
-- **Testes:** Endpoints testados via Postman e com testes unitários automatizados. 
+- **Testes:** Endpoints testados via Postman e com testes unitários automatizados.
 - **Documentação Swagger:** Interface interativa para explorar e testar a API.
 
 ---
@@ -21,30 +21,32 @@ Este projeto é uma API RESTful desenvolvida em Python, utilizando **Flask** ou 
 ## Checklist de Implementação
 
 - [x] **Definir Endpoints**
-    - `/register` : Cadastro de usuário
-    - `/login` : Autenticação e geração de token JWT
-    - `/users` : Listagem de usuários (protegido)
+  - `/register` : Cadastro de usuário
+  - `/login` : Autenticação e geração de token JWT
+  - `/users` : Listagem de usuários (protegido)
 - [x] **Implementar Autenticação JWT**
-    - Geração e validação de tokens para rotas protegidas
+  - Geração e validação de tokens para rotas protegidas
 - [x] **Conectar com Banco de Dados PostgreSQL**
-    - Modelagem de usuários e integração via ORM (SQLAlchemy)
+  - Modelagem de usuários e integração via ORM (SQLAlchemy)
 - [x] **Testar Endpoints**
-    - Testes manuais com Postman
-    - Testes unitários automatizados (pytest ou unittest)
+  - Testes manuais com Postman
+  - Testes unitários automatizados (pytest ou unittest)
 - [x] **Documentar API**
-    - Documentação automática via Swagger/OpenAPI
+  - Documentação automática via Swagger/OpenAPI
 
 ---
 
 ## Como Executar
 
 1. **Clone o repositório:**
+
     ```bash
     git clone https://github.com/Flavio-LP/flask_user_api.git
     cd nome-do-projeto
     ```
 
 2. **Crie e ative um ambiente virtual:**
+
     ```bash
     python -m venv venv
     source venv/bin/activate  # Linux/Mac
@@ -52,13 +54,15 @@ Este projeto é uma API RESTful desenvolvida em Python, utilizando **Flask** ou 
     ```
 
 3. **Instale as dependências:**
+
     ```bash
     pip install -r requirements.txt
     ```
 
 4. **Configure as variáveis de ambiente:**
     - Crie um arquivo `.env` com as configurações do banco de dados e chave secreta JWT.
-    ```
+
+    ```bash
     PG_HOST = ' sua credencial'
     PG_PORT = ' sua credencial'
     PG_USER = ' sua credencial'
@@ -71,6 +75,7 @@ Este projeto é uma API RESTful desenvolvida em Python, utilizando **Flask** ou 
     - Com SQLAlchemy/Alembic ou conforme instruções do projeto.
 
 6. **Inicie a aplicação:**
+
     ```bash
     uvicorn main:app --reload  # Para FastAPI
     # ou
