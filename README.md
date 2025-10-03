@@ -8,12 +8,12 @@ Este projeto é uma API RESTful desenvolvida em Python, utilizando **Flask** ou 
 
 ## Funcionalidades
 
-- **Cadastro de Usuários:** Permite criar novos usuários com dados básicos (nome, email, senha).
-- **Login:** Autenticação de usuários via email e senha, com geração de token JWT.
-- **Listagem de Usuários:** Retorna a lista de usuários cadastrados (acesso protegido).
-- **Autenticação JWT:** Protege rotas sensíveis, garantindo acesso apenas a usuários autenticados.
-- **Integração com PostgreSQL:** Persistência dos dados dos usuários.
-- **Testes:** Endpoints testados via Postman e com testes unitários automatizados.
+- **Cadastro de Usuários:** Permite criar novos usuários com dados básicos (nome, email, senha). ✅
+- **Login:** Autenticação de usuários via email e senha, com geração de token JWT. ✅
+- **Listagem de Usuários:** Retorna a lista de usuários cadastrados (acesso protegido). 
+- **Autenticação JWT:** Protege rotas sensíveis, garantindo acesso apenas a usuários autenticados. ✅
+- **Integração com PostgreSQL:** Persistência dos dados dos usuários. ✅
+- **Testes:** Endpoints testados via Postman e com testes unitários automatizados. 
 - **Documentação Swagger:** Interface interativa para explorar e testar a API.
 
 ---
@@ -40,7 +40,7 @@ Este projeto é uma API RESTful desenvolvida em Python, utilizando **Flask** ou 
 
 1. **Clone o repositório:**
     ```bash
-    git clone https://github.com/seu-usuario/nome-do-projeto.git
+    git clone https://github.com/Flavio-LP/flask_user_api.git
     cd nome-do-projeto
     ```
 
@@ -58,6 +58,14 @@ Este projeto é uma API RESTful desenvolvida em Python, utilizando **Flask** ou 
 
 4. **Configure as variáveis de ambiente:**
     - Crie um arquivo `.env` com as configurações do banco de dados e chave secreta JWT.
+    ```
+    PG_HOST = ' sua credencial'
+    PG_PORT = ' sua credencial'
+    PG_USER = ' sua credencial'
+    PG_PASSWORD = ' sua credencial'
+    PG_DATABASE = ' sua credencial'
+    DATABASE_URL = ' sua credencial'
+    ```
 
 5. **Execute as migrações do banco de dados:**
     - Com SQLAlchemy/Alembic ou conforme instruções do projeto.
