@@ -6,5 +6,8 @@ class UserSchema(BaseModel):
     password: str
 
 class TokenSchema(BaseModel):
-    name  : str
-    token : str
+    email : str
+
+class LoginSchema(BaseModel):
+    email: str
+    password: str
