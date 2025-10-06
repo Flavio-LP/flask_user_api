@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from flask import Blueprint, request, jsonify
+from flasgger import Swagger
 from .database import db
 from sqlalchemy import null, text
 from .models import Users
@@ -12,10 +13,29 @@ bp = Blueprint('routes', __name__)
 
 @bp.route('/', methods=['GET'])
 def register():
+   """
+    Endpoint de teste
+    ---
+    responses:
+      200:
+        description: Mensagem de teste
+        schema:
+          type: string
+          example: "<p>Teste</p>"
+    """
    return "<p>Teste</p>"
 
 @bp.route('/select', methods=['GET'])
 def query():
+    """
+    Consulta data e hora do banco
+    ---
+    responses:
+      200:
+        description: Data e hora atual do banco
+        schema:
+          type: string
+    """
     result = db.session.execute(text('SELECT NOW();'))
     now = result.fetchone()[0]
     print('Data e hora do banco:', now)
@@ -23,6 +43,43 @@ def query():
 
 @bp.route('/register', methods=['POST'])
 def create():
+    """
+    Criar novo usuário
+    ---
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "José Silva"
+            email:
+              type: string
+              example: "jose@exemplo.com"
+            password:
+              type: string
+              example: "1234"
+          required:
+            - name
+            - email
+            - password
+    responses:
+      201:
+        description: Usuário criado com sucesso
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "Usuário criado com sucesso!"
+      400:
+        description: Erro de validação
+      409:
+        description: Usuário já existe
+    """
     try:
         # Valida e carrega os dados recebidos
         data = UserSchema(**request.json)
@@ -47,6 +104,41 @@ def create():
 
 @bp.route('/login', methods=['POST'])
 def user_autenticate():
+    """
+    Autenticar usuário
+    ---
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              example: "jose@exemplo.com"
+            password:
+              type: string
+              example: "1234"
+          required:
+            - email
+            - password
+    responses:
+      200:
+        description: Login realizado com sucesso
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "autorizado"
+      401:
+        description: Não autorizado
+      404:
+        description: Usuário não encontrado
+      498:
+        description: Token expirado
+    """
     try:
         data = LoginSchema(**request.json)
     except ValidationError as e:
@@ -78,6 +170,40 @@ def user_autenticate():
     
 @bp.route('/users', methods=['POST'])
 def list():
+    """
+    Listar todos os usuários
+    ---
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              example: "jose@exemplo.com"
+          required:
+            - email
+    responses:
+      200:
+        description: Lista de usuários
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              email:
+                type: string
+      400:
+        description: Erro de validação
+      401:
+        description: Token inválido
+    """
     try:
         #print(User.name)
         token = TokenSchema(**request.json)
@@ -87,8 +213,8 @@ def list():
         payload = verify_token(User.token_acess)
 
         if ('error' in payload):
-            return '{' + payload.error + '}', payload.status
-
+            return jsonify({'error': payload['error']}), int(payload['status'])
+        
         Users_db = db.session.query(Users).all()
 
         for user in Users_db:
