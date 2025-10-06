@@ -217,9 +217,9 @@ def list():
         
         Users_db = db.session.query(Users).all()
 
-        for user in Users_db:
-            
-            users = []
+        users = []
+        
+        for user in Users_db:    
 
             users.append({
                 'id' : user.id,
@@ -227,7 +227,9 @@ def list():
                 'email' : user.email
             })
 
-        return jsonify(users)
+
+
+        return jsonify(sorted(users, key=lambda x: x['id']))
 
         #return jsonify({'message': 'autenticado'}), 201
     except ValidationError as e:
