@@ -1,5 +1,5 @@
 try:
-    import PyJWT as jwt
+    import PyJWT as jwt  # type: ignore
 except ImportError:
     import jwt
 import os
