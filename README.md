@@ -2,17 +2,17 @@
 
 ## Descrição
 
-Este projeto é uma API RESTful desenvolvida em Python, utilizando **Flask** ou **FastAPI**, para gerenciamento de usuários. A API permite o cadastro, login e listagem de usuários, com autenticação baseada em JWT e integração com banco de dados **PostgreSQL**. A documentação interativa é gerada automaticamente via **Swagger**.
+Este projeto é uma API RESTful desenvolvida em Python, utilizando **Flask**, para gerenciamento de usuários. A API permite o cadastro, login e listagem de usuários, com autenticação baseada em JWT e integração com banco de dados **PostgreSQL**. A documentação interativa é gerada automaticamente via **Swagger**.
 
 ---
 
 ## Funcionalidades
 
-- **Cadastro de Usuários:** Permite criar novos usuários com dados básicos (nome, email, senha). ✅
-- **Login:** Autenticação de usuários via email e senha, com geração de token JWT. ✅
+- **Cadastro de Usuários:** Permite criar novos usuários com dados básicos (nome, email, senha).
+- **Login:** Autenticação de usuários via email e senha, com geração de token JWT.
 - **Listagem de Usuários:** Retorna a lista de usuários cadastrados (acesso protegido).
-- **Autenticação JWT:** Protege rotas sensíveis, garantindo acesso apenas a usuários autenticados. ✅
-- **Integração com PostgreSQL:** Persistência dos dados dos usuários. ✅
+- **Autenticação JWT:** Protege rotas sensíveis, garantindo acesso apenas a usuários autenticados.
+- **Integração com PostgreSQL:** Persistência dos dados dos usuários.
 - **Testes:** Endpoints testados via Postman e com testes unitários automatizados.
 - **Documentação Swagger:** Interface interativa para explorar e testar a API.
 
@@ -30,9 +30,9 @@ Este projeto é uma API RESTful desenvolvida em Python, utilizando **Flask** ou 
   - Modelagem de usuários e integração via ORM (SQLAlchemy)
 - [x] **Testar Endpoints**
   - Testes manuais com Postman
-  - Testes unitários automatizados (pytest ou unittest)
+  - Testes unitários automatizados (pytest)
 - [x] **Documentar API**
-  - Documentação automática via Swagger/OpenAPI
+  - Documentação automática via Swagger
 
 ---
 
@@ -69,6 +69,7 @@ Este projeto é uma API RESTful desenvolvida em Python, utilizando **Flask** ou 
     PG_PASSWORD = ' sua credencial'
     PG_DATABASE = ' sua credencial'
     DATABASE_URL = ' sua credencial'
+    SECRET_KEY = ' sua credencial'
     ```
 
 5. **Execute as migrações do banco de dados:**
@@ -77,14 +78,10 @@ Este projeto é uma API RESTful desenvolvida em Python, utilizando **Flask** ou 
 6. **Inicie a aplicação:**
 
     ```bash
-    uvicorn main:app --reload  # Para FastAPI
-    # ou
-    set FLASK_APP=app:create_app 
     flask run                  # Para Flask
     ```
 
 7. **Acesse a documentação Swagger:**
-    - FastAPI: [http://localhost:8000/docs](http://localhost:8000/docs)
     - Flask (com flask-swagger): [http://localhost:5000/apidocs](http://localhost:5000/apidocs)
 
 ---
@@ -92,19 +89,19 @@ Este projeto é uma API RESTful desenvolvida em Python, utilizando **Flask** ou 
 ## Testes
 
 - **Testes Manuais:** Utilize o arquivo de coleção do Postman disponível no repositório.
-- **Testes Automatizados:** Execute `pytest` ou `python -m unittest discover` para rodar os testes unitários.
+- **Testes Automatizados:** Execute `pytest` para rodar os testes unitários.
 
 ---
 
 ## Tecnologias Utilizadas
 
-- Python 3.x
-- FastAPI ou Flask
+- Python 3.12.10
+- Flask
 - PostgreSQL
 - SQLAlchemy
 - JWT (PyJWT)
-- Swagger/OpenAPI
-- Pytest/Unittest
+- Swagger
+- Pytest
 
 ---
 
