@@ -1,0 +1,44 @@
+
+.html{
+    display: flex;
+}
+
+.body{
+    display: flex;
+}
+
+.header{
+    display: flex;
+}
+
+.header_bar{
+    display: flex;
+    width: 100vw;
+    height: 5vw;
+    background-color: rgb(152, 202, 235);
+    flex-direction: row-reverse;
+    align-items: end;
+}
+
+.docs_button{
+    display: flex;
+    width: 20px;
+    height: 20px;
+    margin: 20px;
+}
+
+.section_title_page{
+    display: flex;
+    justify-content: center;
+}
+
+.img_website{
+    display: flex;
+    justify-content: center;
+    margin-top: 5vw;
+}
+
+.image_logo{
+    height: 20%;
+    width: 20%;
+}

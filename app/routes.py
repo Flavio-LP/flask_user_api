@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 from flasgger import Swagger
 from .database import db
 from sqlalchemy import null, text
@@ -13,17 +13,7 @@ bp = Blueprint('routes', __name__)
 
 @bp.route('/', methods=['GET'])
 def register():
-   """
-    Endpoint de teste
-    ---
-    responses:
-      200:
-        description: Mensagem de teste
-        schema:
-          type: string
-          example: "<p>Teste</p>"
-    """
-   return "<p>Teste</p>"
+   return render_template('index.html')
 
 @bp.route('/select', methods=['GET'])
 def query():
