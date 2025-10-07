@@ -1,0 +1,9 @@
+html{
+    width: 10vw;
+    height: 10vw;
+    display: flex;
+}
+
+body{
+    background-color: black;
+}

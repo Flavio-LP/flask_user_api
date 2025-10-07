@@ -4,9 +4,11 @@ from flasgger import Swagger
 from .database import db
 from dotenv import load_dotenv
 from . import models
+from flask_cors import CORS
 
 def create_app():
     app = Flask(__name__)
+    CORS(app, origins="*")
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
