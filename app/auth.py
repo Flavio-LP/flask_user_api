@@ -1,6 +1,13 @@
-import jwt
+try:
+    import PyJWT as jwt
+except ImportError:
+    import jwt
 import os
 from datetime import datetime, timedelta
+
+print("JWT module location:", jwt.__file__)
+print("JWT module attributes:", dir(jwt))
+print("Has encode?", hasattr(jwt, 'encode'))
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'sua_chave_secreta')
 
