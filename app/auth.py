@@ -2,8 +2,7 @@ import jwt
 import os
 from datetime import datetime, timedelta
 
-SECRET_KEY = '1234'
-#os.getenv('SECRET_KEY', 'sua_chave_secreta')
+SECRET_KEY = os.getenv('SECRET_KEY', 'sua_chave_secreta')
 
 def generate_token(payload):
     return jwt.encode(payload, SECRET_KEY, algorithm='HS256')
